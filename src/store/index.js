@@ -9,11 +9,10 @@ export default new Vuex.Store({
   },
 
   getters: { // = computed properties
-    productsCount() {
-
+    availableProducts(state, getters) {
+      return state.products.filter(product => product.inventory > 0);
     }
   },
-
   actions: { // = methods
     fetchProducts() {
       // make the api call

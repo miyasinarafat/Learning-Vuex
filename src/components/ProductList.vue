@@ -17,7 +17,7 @@
     export default {
       computed: {
         products() {
-          return store.state.products;
+          return store.getters.availableProducts;
         }
       },
       created() {
