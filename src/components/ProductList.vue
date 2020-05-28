@@ -11,17 +11,18 @@
 
 <script>
   import shop from "@/api/shop";
-    export default {
-        name: "ProductList",
-      data() {
-          return {
-            products: []
-          }
-      },
+  import store from "@/store/index";
 
+
+    export default {
+      computed: {
+        products() {
+          return store.state.products;
+        }
+      },
       created() {
           shop.getProducts(products => {
-            this.products = products
+            store.commit('setProducts', products);
           })
       }
     }
