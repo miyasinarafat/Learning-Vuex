@@ -1,5 +1,6 @@
 import Vuex from 'vuex';
 import Vue from 'vue';
+import shop from "@/api/shop";
 
 Vue.use(Vuex);
 
@@ -13,10 +14,18 @@ export default new Vuex.Store({
       return state.products.filter(product => product.inventory > 0);
     }
   },
+
   actions: { // = methods
-    fetchProducts() {
+    fetchProducts(context) {
       // make the api call
-    }
+      // call setProducts mutation
+      return new Promise((resolve, reject) => {
+        shop.getProducts(products => {
+          context.commit('setProducts', products);
+          resolve();
+        });
+      });
+    },
   },
 
   mutations: { // = update and set the instance
