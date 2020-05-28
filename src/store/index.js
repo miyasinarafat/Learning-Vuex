@@ -9,6 +9,7 @@ export default new Vuex.Store({
     products: [],
     // {id, quantity}
     cart: [],
+    setCheckoutStatus: null,
   },
 
   getters: { // = computed properties
@@ -57,6 +58,19 @@ export default new Vuex.Store({
         context.commit('decrementProductInventory', product);
       }
     },
+
+    checkout({state, commit}) {
+      shop.buyProducts(
+        state.cart,
+        () => {
+          commit('emptyCart')
+          commit('setCheckoutStatus', 'success')
+        },
+        () => {
+          commit('setCheckoutStatus', 'fail')
+        }
+        )
+    },
   },
 
   mutations: { // = update and set the instance
@@ -64,18 +78,31 @@ export default new Vuex.Store({
       // update products
       state.products = products
     },
+
     pushProductToCart(state, productId) {
       state.cart.push({
         id: productId,
         quantity: 1
       })
     },
+
     incrementItemQuantity(state, cartItem) {
       cartItem.quantity++
     },
+
     decrementProductInventory(state, product) {
       product.inventory--
-    }
+    },
+
+    setCheckoutStatus(state, status) {
+      state.setCheckoutStatus = status
+    },
+
+    emptyCart(state) {
+      state.cart = []
+    },
+
+
   }
 
 });
