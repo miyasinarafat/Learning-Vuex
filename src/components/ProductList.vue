@@ -23,8 +23,8 @@
 
     methods: {
       ...mapActions({
-        fetchProducts: 'fetchProducts',
-        addProductToCart: 'addProductToCart'
+        fetchProducts: 'products/fetchProducts',
+        addProductToCart: 'cart/addProductToCart'
       }),
     },
 
@@ -33,7 +33,7 @@
         products: state => state.products.items
       }),
 
-      ...mapGetters({
+      ...mapGetters('products', {
         productInStock: 'productInStock'
       }),
     },
